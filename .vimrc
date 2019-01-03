@@ -36,6 +36,10 @@ Plugin 'tmhedberg/SimpylFold'
 
 Plugin 'vim-scripts/indentpython.vim'
 
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
+Plugin 'ericcurtin/CurtineIncSw.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -52,6 +56,33 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 set encoding=utf-8
+
+" Leader
+set showcmd
+let g:mapleader = ","
+
+" Buffer
+" Mappings to access buffers (don't use "\p" because a
+" delay before pressing "p" would accidentally paste).
+" \l       : list buffers
+" \b \f \g : go back/forward/last-used
+" \1 \2 \3 : go to buffer 1/2/3 etc
+nnoremap <Leader>l :ls<CR>
+nnoremap <Leader>b :bp<CR>
+nnoremap <Leader>f :bn<CR>
+nnoremap <Leader>g :e#<CR>
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
+" It's useful to show the buffer number in the status line.
+set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " Filetypes
 au BufNewFile,BufRead *.py
@@ -101,7 +132,6 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:ale_completion_enabled = 1
-" Put these lines at the very end of your vimrc file.
 
 " let g:ycm_server_keep_logfiles = 1
 " let g:ycm_server_log_level = 'debug'
@@ -113,9 +143,18 @@ let g:EclimCompletionMethod = 'omnifunc'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_path_to_python_interpreter = '/usr/bin/python2'
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_python_binary_path = 'python'
+let g:ycm_max_diagnostics_to_display = 1000
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+
+
+let g:ale_linters = {
+            \'c': [],
+            \'cpp': [],
+            \}
+
 
 " python with virtualenv support
 py << EOF
@@ -127,10 +166,16 @@ if 'VIRTUAL_ENV' in os.environ:
   execfile(activate_this, dict(__file__=activate_this))
 EOF
 
+let g:gutentags_cache_dir = '~/.cache/gutentags'
 
 " Nerdcommenter
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
+
+" SCRIPTS
+map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+
+
 
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
